@@ -18,7 +18,7 @@ exports.create = async (req, res) => {
     db.close();
 };
    
- exports.read = async (_, res) => {
+exports.read = async (_, res) => {
     const db = await getDb();
       
     try {
@@ -29,12 +29,12 @@ exports.create = async (req, res) => {
         res.status(500).json(err);
         }
     db.close();
-    };
-    exports.readById = async (req, res) => {
-        const db = await getDb();
-        const { artistId } = req.params;
+};
+exports.readById = async (req, res) => {
+    const db = await getDb();
+    const { artistId } = req.params;
       
-        const [[artist]] = await db.query('SELECT * FROM Artist WHERE id = ?', [
+    const [[artist]] = await db.query('SELECT * FROM Artist WHERE id = ?', [
           artistId,
         ]);
       
@@ -74,7 +74,7 @@ exports.create = async (req, res) => {
         try {
             const [
               { affectedRows },
-            ] = await db.query('DELETE FROM Artist SET ? WHERE id = ?', [artistId]);
+            ] = await db.query('DELETE FROM Artist WHERE id = ?', [artistId]);
         
             if (!affectedRows) {
               res.sendStatus(404);
