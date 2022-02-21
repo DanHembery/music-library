@@ -30,7 +30,7 @@ describe('read artist', () => {
 
   afterEach(async () => {
     await db.query('DELETE FROM Artist');
-    await db.close();
+    await db.end();
   });
 
   describe('/artist', () => {

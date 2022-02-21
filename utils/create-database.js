@@ -39,12 +39,19 @@ const setUpDatabase = async () => {
       name VARCHAR(25),
       genre VARCHAR(25)
     )`);
-    db.close();
+    await db.query(`CREATE TABLE IF NOT EXISTS Album (
+      id INT PRIMARY KEY auto_increment,
+      name VARCHAR(25),
+      year INT,
+      artistId INT,
+      FOREIGN KEY (artistId) REFERENCES Artist(id)
+    )`);
+    db.end();
 
   } catch (err) {
    // if something goes wrong, console.log the error and the current environment variables
     console.log(
-      `Your environment variables might be wrong. Please double check .env file`
+      "Your environment variables might be wrong. Please double check .env file"
     );
     console.log('Environment Variables are:', {
       DB_PASSWORD,
