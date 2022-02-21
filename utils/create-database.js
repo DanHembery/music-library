@@ -36,12 +36,12 @@ const setUpDatabase = async () => {
     await db.query(`USE ${DB_NAME}`);
     await db.query(`CREATE TABLE IF NOT EXISTS Artist (
       id INT PRIMARY KEY auto_increment,
-      name VARCHAR(25),
+      name VARCHAR(50),
       genre VARCHAR(25)
     )`);
     await db.query(`CREATE TABLE IF NOT EXISTS Album (
       id INT PRIMARY KEY auto_increment,
-      name VARCHAR(25),
+      name VARCHAR(50),
       year INT,
       artistId INT,
       FOREIGN KEY (artistId) REFERENCES Artist(id)
