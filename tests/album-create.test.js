@@ -5,6 +5,7 @@ const app = require('../src/app');
 
 describe('create album', () => {
   let db;
+  let artists;
   beforeEach(async () => {
     db = await getDb();
     await Promise.all([
@@ -21,6 +22,8 @@ describe('create album', () => {
         'jazz',
       ]),
     ]);
+
+    [artists] = await db.query('SELECT * FROM Artist')
   });
 
   afterEach(async () => {
@@ -29,13 +32,13 @@ describe('create album', () => {
     await db.end();
   });
 
-  describe('/album', () => {
+  describe('/artist/:artistId/album', () => {
     describe('POST', () => {
       it('creates a new album in the database', async () => {
-        const res = await request(app).post('/artist/:artistId/album').send({
+        const artist = artists[0];
+        const res = await request(app).post(`/artist/${artist.id}/album`).send({
           name: 'Greatest Hits',
-          year: '2008',
-          artistId: '1'
+          year: 2008
         });
 
         expect(res.status).to.equal(201);
@@ -45,7 +48,7 @@ describe('create album', () => {
         );
 
         expect(albumEntries.name).to.equal('Greatest Hits');
-        expect(albumEntries.year).to.equal('2008');
+        expect(albumEntries.year).to.equal(2008);
       });
     });
   });

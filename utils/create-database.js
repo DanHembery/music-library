@@ -46,6 +46,7 @@ const setUpDatabase = async () => {
       artistId INT,
       FOREIGN KEY (artistId) REFERENCES Artist(id)
     )`);
+    
     db.end();
 
   } catch (err) {
